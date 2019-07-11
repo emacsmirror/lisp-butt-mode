@@ -1,0 +1,430 @@
+#+title: Slim lisp butts
+
+* About
+:PROPERTIES:
+:EXPORT_FILE_NAME: doc-org-pretty-tags
+:END:
+
+This is a minor mode to make lisp butts appear slim.
+
+** Why
+:PROPERTIES:
+:ID:       6bc15117-c35d-4935-8d28-fd8252e519be
+:END:
+
+The real cause of lisp's unpopularity are the fat lisp butts which can
+often be seen in lisp code.
+
+Example:
+#+begin_src text
+))))))))))))))))))))))))))))))))
+#+end_src
+
+Nobody wants to talk about this but at the same time nobody wants to see
+these ugly horrific monsters.
+
+** What the lisp-butt-mode offers
+
+lisp-butt-mode brings fat lisp butts in shape.
+
+#+begin_src text
+))))))))))))))))))))))))))))))))
+#+end_src
+
+gets displayed nicely as (pun intended)
+#+begin_src text
+(.)
+#+end_src
+
+** Concrete Use :easy:
+
+It's easy!
+
+*** Activate/Deactivate
+
+#+name: description-activate
+#+begin_src org
+- Toggle the mode with {M-x lisp-butt-mode RET}.
+- Activate the mode with {C-u M-x lisp-butt-mode RET}.
+- Deactivate the mode with {C-u -1 M-x lisp-butt-mode RET}.
+
+See also the literate source file.  E.g. see
+https://gitlab.com/marcowahl/lisp-butt-mode.
+#+end_src
+
+** Install
+
+Install by adding the respective lines to your init.el:
+
+#+begin_src emacs-lisp :tangle no
+(push "<path/to/lisp-butt-mode>" load-path)
+(require 'lisp-butt-mode)
+#+end_src
+
+** Metadata
+
+*** Version
+
+#+name: lisp-butt-version
+#+begin_src text
+0.0.0
+#+end_src
+
+*** Typical Metadata
+
+Author, contact, dependencies.
+
+#+name: package-metadata
+#+begin_src text :noweb yes
+Author: Marco Wahl <marcowahlsoft@gmail.com>
+Maintainer: Marco Wahl <marcowahlsoft@gmail.com>
+Created: [2019-07-11]
+Version: <<lisp-butt-version>>
+Package-Requires: ((emacs "25"))
+Keywords: reading, programming
+#+end_src
+
+*** Copyright
+
+#+name: copyright
+#+begin_src text :noweb yes
+Copyright 2019 Marco Wahl
+
+<<package-metadata>>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#+end_src
+
+** About this Program
+:PROPERTIES:
+:ID:       76033920-34fc-4854-96af-9df084ae300d
+:END:
+
+This section gives some additional information about the program and
+might mainly be of interest for people who want to develop the program
+further.
+
+*** Literate Program
+
+=lisp-butt-mode= is a literate program written in Org mode.  The
+emacs-lisp program =lisp-butt-mode.el= is generated from the literate
+source =lisp-butt-mode.org= by a step called tangle.
+
+**** Tangle
+
+{ M-x org-babel-tangle RET } in file =lisp-butt-mode.org= triggers
+the tangle.  This generates file =lisp-butt-mode.el= if this goes
+well.
+
+**** Detangle
+
+Recall the opportunity to use the property line
+
+#+begin_src text
+:header-args:emacs-lisp+: :comments both
+#+end_src
+
+instead of
+
+#+begin_src text
+:header-args:emacs-lisp+: :comments no
+#+end_src
+
+in section [[Functionality]] to create tangle-info in the tangled file.
+The additional info can be used with function org-babel-detangle.
+Detangle means to edit the tangled file and bring these changes to the
+literate source file.
+
+*** Files
+
+- lisp-butt-mode.org ::  The literate source
+- readme.org :: This is the same (hardlinked) as the literate source
+  file.
+  - With this filename its content shows up nicely and automatically
+    e.g. on the front page of gitlab since they support Orgmode files.
+- LICENSE :: GPL3 license.
+- *.el :: Elisp source files.
+  - Note: these files are derived from the literate source.
+
+*** Contact
+
+Send feedback, wishes, bug reports, contributions etc. to
+marcowahlsoft@gmail.com.
+
+** Further
+
+*** hint to remove this font-lock keyword in a buffer
+
+just a hint.
+
+evaluate
+
+#+begin_src emacs-lisp :tangle no
+(font-lock-remove-keywords nil '((")\\())+\\))"
+      (1 (compose-region
+          (match-beginning 1) (match-end 1)
+          ".")
+         nil))))
+#+end_src
+
+the above is just a hint how to realize the disabling programatically.
+
+e.g. the code did not change the representation of the lisp butts
+immediately.  newly written lisp butts were left alone, though.
+
+** Tasks
+
+*** Open
+
+*** Closed
+
+* Code
+
+** Package
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle lisp-butt-mode.el
+:END:
+
+*** First Lines
+:PROPERTIES:
+:ID:       15f7cf10-3b11-4373-b2e7-8b89f1dbafbc
+:END:
+
+#+begin_src emacs-lisp :noweb yes
+;;; lisp-butt-mode.el --- Surrogates for tags  -*- lexical-binding: t -*-
+
+;; THIS FILE HAS BEEN GENERATED.  For sustainable program-development
+;; edit the literate source file "lisp-butt-mode.org".  Find also
+;; additional information there.
+
+;; <<copyright>>
+
+
+;;; Commentary:
+
+;; <<description-activate>>
+
+#+end_src
+
+**** code section header
+:PROPERTIES:
+:ID:       12bb6a92-216b-4320-a1b5-ef7061836764
+:END:
+
+#+begin_src emacs-lisp
+
+;;; Code:
+#+end_src
+
+*** Middle Lines
+:PROPERTIES:
+:header-args:emacs-lisp+: :comments no
+:ID:       3b8dcfaf-b4df-4683-b5df-9a1a54208b3c
+:END:
+
+:meta:
+Recall the lines for the properties to control some of the tangle for
+this subtree.
+
+# :header-args:emacs-lisp+: :comments no
+# :header-args:emacs-lisp+: :comments both
+:END:
+
+**** requires
+:PROPERTIES:
+:ID:       44b48b71-90f0-47e8-89ce-53b49239b550
+:END:
+
+#+begin_src emacs-lisp
+
+(require 'cl-lib) ; for `cl-assert'
+#+end_src
+
+**** functions
+:PROPERTIES:
+:ID:       2846e96a-7344-4deb-8589-9fbdaeeffd5e
+:END:
+
+***** extension of the font lock system
+:PROPERTIES:
+:ID:       6c42d95c-525c-4960-a843-f1e5870ae76a
+:END:
+
+#+begin_src emacs-lisp
+(defun lisp-butt-slim-display ()
+  "Function to produce nicer lisp butts.
+This function can be hooked into the modes of interest.  E.g.
+(add-hook 'emacs-lisp-mode-hook #'lisp-butt-slim-display)
+(add-hook 'lisp-mode-hook #'lisp-butt-slim-display)
+
+Hint: see the usual butts by turning off font-lock."
+  (font-lock-add-keywords
+   nil
+   '((")\\())+\\))"
+      (1 (compose-region
+          (match-beginning 1) (match-end 1)
+          ".")
+         nil)))))
+#+end_src
+
+***** direct un/fontification
+:PROPERTIES:
+:ID:       e578a2ac-de33-4dad-acb8-c5025b7d5489
+:END:
+
+#+begin_src emacs-lisp
+(defun lisp-butt-fontify ()
+  "Fontify lisp butt."
+  (interactive)
+  (while (string= ")" (buffer-substring-no-properties (1- (point)) (point)))
+    (goto-char (1- (point))))
+  (re-search-forward ")*")
+  (unless (= (match-beginning 0) (match-end 0))
+    (font-lock-fontify-region (1+ (match-beginning 0)) (1- (match-end 0)))))
+
+(defun lisp-butt-unfontify ()
+  "Unfontify lisp butt."
+  (interactive)
+  (while (string= ")" (buffer-substring-no-properties (1- (point)) (point)))
+    (goto-char (1- (point))))
+  (re-search-forward ")*")
+  (unless (= (match-beginning 0) (match-end 0))
+    (font-lock-unfontify-region (1+ (match-beginning 0)) (1- (match-end 0)))))
+#+end_src
+
+**** the mode
+
+***** minor-mode lighter
+:PROPERTIES:
+:ID:       80867f2f-2497-4310-a172-4abd272af6f8
+:END:
+
+#+begin_src emacs-lisp
+;;;###autoload
+(defcustom lisp-butt-mode-lighter
+  " (.)"
+  "Text in the mode line to indicate that the mode is on."
+  :type 'string
+  :group 'lisp-butt)
+#+end_src
+
+***** define the mode
+:PROPERTIES:
+:ID:       a3d9cc59-89aa-4165-a844-90da8531b46f
+:END:
+
+#+begin_src emacs-lisp
+
+;; mode definition
+
+;;;###autoload
+(define-minor-mode lisp-butt-mode
+  "Display slim lisp butts."
+  :lighter lisp-butt-mode-lighter
+  (cond
+   (lisp-butt-mode
+    (add-hook 'emacs-lisp-mode-hook #'lisp-butt-slim-display)
+    (add-hook 'lisp-mode-hook #'lisp-butt-slim-display))
+   (t
+    (remove-hook 'emacs-lisp-mode-hook #'lisp-butt-slim-display)
+    (remove-hook 'lisp-mode-hook #'lisp-butt-slim-display))))
+#+end_src
+
+*** Last Lines
+:PROPERTIES:
+:ID:       300d188f-9b90-4bd8-9d65-78823402a3de
+:END:
+
+#+begin_src emacs-lisp
+
+(provide 'lisp-butt-mode)
+
+;;; lisp-butt-mode.el ends here
+#+end_src
+
+
+** Testing
+
+*** Run Unittests
+
+ - Evaluate the following source block to tangle the necessary and run
+   the unittests e.g. by following the link [[elisp:(progn (org-babel-next-src-block) (org-babel-execute-src-block))]]
+
+# <(trigger tests)>
+
+#+begin_src emacs-lisp :results silent
+(let ((apath "."))
+  (org-babel-tangle-file "lisp-butt-mode.org")
+  (ert-delete-all-tests)
+  (push apath load-path)
+  (load "lisp-butt-mode.el")
+  (load "lisp-butt-mode-test.el")
+  (ert t)
+  (setq load-path (remove apath load-path))
+  (run-with-timer 1 nil (lambda () (switch-to-buffer-other-window "*ert*"))))
+#+end_src
+
+*** Unittests
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle lisp-butt-mode-test.el
+:END:
+
+Note: the name with suffix =-test= has a meaning for melpa: the file does
+not get included in the package.
+
+**** First lines
+:PROPERTIES:
+:ID:       0afc357c-dbc7-447b-8123-8b725e9c6e7d
+:END:
+
+#+begin_src emacs-lisp :padline no :noweb yes
+;;; lisp-butt-mode-test.el --- tests  -*- lexical-binding: t -*-
+
+
+;; THIS FILE HAS BEEN GENERATED.  see the literate source.
+
+;; <<copyright>>
+
+
+#+end_src
+
+**** Tests
+:PROPERTIES:
+:header-args:emacs-lisp+: :comments both
+:ID:       dac141b6-e0a8-4312-8022-90b08fce4c84
+:END:
+
+#+begin_src emacs-lisp
+(require 'lisp-butt-mode)
+#+end_src
+
+#+begin_src emacs-lisp
+(ert-deftest test-lisp-butt-1 ()
+  "test switch mode on and off."
+  (lisp-butt-mode)
+  (lisp-butt-mode)
+  (should t))
+#+end_src
+
+**** Last Lines
+:PROPERTIES:
+:ID:       b4d9edb9-2c12-4110-a47d-361ce458f129
+:END:
+
+#+begin_src emacs-lisp
+
+(provide 'lisp-butt-test)
+
+;;; lisp-butt-test.el ends here
+#+end_src
