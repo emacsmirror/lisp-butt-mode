@@ -5,7 +5,7 @@
 :EXPORT_FILE_NAME: doc-org-pretty-tags
 :END:
 
-This is a minor mode to make lisp butts appear slim.
+This is a minor mode to make fat lisp butts appear slim.
 
 ** Why
 :PROPERTIES:
@@ -31,22 +31,33 @@ lisp-butt-mode brings fat lisp butts in shape.
 ))))))))))))))))))))))))))))))))
 #+end_src
 
-gets displayed nicely as (pun intended)
+gets displayed nicely as (pun intended):
+
 #+begin_src text
-(.)
+).)
 #+end_src
 
 ** Concrete Use :easy:
 
-It's easy!
-
-*** Activate/Deactivate
-
 #+name: description-activate
 #+begin_src org
+There is a global `global-lisp-butt-mode' and a local `lisp-butt-mode'
+variant.
+
+Global:
+
+- Toggle the mode with {M-x global-lisp-butt-mode RET}.
+- Activate the mode with {C-u M-x global-lisp-butt-mode RET}.
+- Deactivate the mode with {C-u -1 M-x global-lisp-butt-mode RET}.
+
+Local:
+
 - Toggle the mode with {M-x lisp-butt-mode RET}.
 - Activate the mode with {C-u M-x lisp-butt-mode RET}.
 - Deactivate the mode with {C-u -1 M-x lisp-butt-mode RET}.
+
+Further {M-x lisp-butt-unfontify} unveils the full butt at the cursor
+temporarily.
 
 See also the literate source file.  E.g. see
 https://gitlab.com/marcowahl/lisp-butt-mode.
@@ -67,7 +78,7 @@ Install by adding the respective lines to your init.el:
 
 #+name: lisp-butt-version
 #+begin_src text
-0.0.0
+0.0.1
 #+end_src
 
 *** Typical Metadata
@@ -162,44 +173,23 @@ literate source file.
 Send feedback, wishes, bug reports, contributions etc. to
 marcowahlsoft@gmail.com.
 
-** Further
-
-*** hint to remove this font-lock keyword in a buffer
-
-just a hint.
-
-evaluate
-
-#+begin_src emacs-lisp :tangle no
-(font-lock-remove-keywords nil '((")\\())+\\))"
-      (1 (compose-region
-          (match-beginning 1) (match-end 1)
-          ".")
-         nil))))
-#+end_src
-
-the above is just a hint how to realize the disabling programatically.
-
-e.g. the code did not change the representation of the lisp butts
-immediately.  newly written lisp butts were left alone, though.
-
 ** Tasks
 
 *** Open
 
-**** TODO Write cleanly to switch on/off for a file
+*** Closed
 
-Hint: Currently the realization is a bit weird.
+**** DONE Write cleanly to switch on/off for a file
 
-**** TODO Provide a global variant
+Hint: Currently [2019-07-11 8:26] the realization is a bit weird.
+
+**** DONE Provide a global variant
 
 Hint: look how it's done at org-pretty-tags.
 
-*** Closed
-
 * Code
 
-** Package
+** Functionality
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle lisp-butt-mode.el
 :END:
@@ -210,7 +200,7 @@ Hint: look how it's done at org-pretty-tags.
 :END:
 
 #+begin_src emacs-lisp :noweb yes
-;;; lisp-butt-mode.el --- Surrogates for tags  -*- lexical-binding: t -*-
+;;; lisp-butt-mode.el --- Slim lisp butts -*- lexical-binding: t -*-
 
 ;; THIS FILE HAS BEEN GENERATED.  For sustainable program-development
 ;; edit the literate source file "lisp-butt-mode.org".  Find also
@@ -270,14 +260,21 @@ this subtree.
 :END:
 
 #+begin_src emacs-lisp
-(defun lisp-butt-slim-display ()
-  "Function to produce nicer lisp butts.
-This function can be hooked into the modes of interest.  E.g.
-(add-hook 'emacs-lisp-mode-hook #'lisp-butt-slim-display)
-(add-hook 'lisp-mode-hook #'lisp-butt-slim-display)
-
-Hint: see the usual butts by turning off font-lock."
+(defun lisp-butt-set-slim-display ()
+  "Function to produce nicer lisp butts."
+  (cl-assert (derived-mode-p 'lisp-mode 'emacs-lisp-mode))
   (font-lock-add-keywords
+   nil
+   '((")\\())+\\))"
+      (1 (compose-region
+          (match-beginning 1) (match-end 1)
+          ".")
+         nil)))))
+
+(defun lisp-butt-unset-slim-display ()
+  "Function to undo the nicer lisp butts."
+  (cl-assert (derived-mode-p 'lisp-mode 'emacs-lisp-mode))
+  (font-lock-remove-keywords
    nil
    '((")\\())+\\))"
       (1 (compose-region
@@ -286,23 +283,14 @@ Hint: see the usual butts by turning off font-lock."
          nil)))))
 #+end_src
 
-***** direct un/fontification
+***** direct unfontification
 :PROPERTIES:
 :ID:       e578a2ac-de33-4dad-acb8-c5025b7d5489
 :END:
 
 #+begin_src emacs-lisp
-(defun lisp-butt-fontify ()
-  "Fontify lisp butt."
-  (interactive)
-  (while (string= ")" (buffer-substring-no-properties (1- (point)) (point)))
-    (goto-char (1- (point))))
-  (re-search-forward ")*")
-  (unless (= (match-beginning 0) (match-end 0))
-    (font-lock-fontify-region (1+ (match-beginning 0)) (1- (match-end 0)))))
-
 (defun lisp-butt-unfontify ()
-  "Unfontify lisp butt."
+  "Unfontify lisp butt at point."
   (interactive)
   (while (string= ")" (buffer-substring-no-properties (1- (point)) (point)))
     (goto-char (1- (point))))
@@ -327,7 +315,7 @@ Hint: see the usual butts by turning off font-lock."
   :group 'lisp-butt)
 #+end_src
 
-***** define the mode
+***** define the modes
 :PROPERTIES:
 :ID:       a3d9cc59-89aa-4165-a844-90da8531b46f
 :END:
@@ -341,12 +329,15 @@ Hint: see the usual butts by turning off font-lock."
   "Display slim lisp butts."
   :lighter lisp-butt-mode-lighter
   (cond
-   (lisp-butt-mode
-    (add-hook 'emacs-lisp-mode-hook #'lisp-butt-slim-display)
-    (add-hook 'lisp-mode-hook #'lisp-butt-slim-display))
-   (t
-    (remove-hook 'emacs-lisp-mode-hook #'lisp-butt-slim-display)
-    (remove-hook 'lisp-mode-hook #'lisp-butt-slim-display))))
+   (lisp-butt-mode (lisp-butt-set-slim-display))
+   (t (lisp-butt-unset-slim-display)))
+  (font-lock-mode 1))
+
+(define-global-minor-mode global-lisp-butt-mode
+  lisp-butt-mode
+  (lambda ()
+    (if (derived-mode-p 'lisp-mode 'emacs-lisp-mode)
+        (lisp-butt-mode))))
 #+end_src
 
 *** Last Lines
@@ -419,10 +410,10 @@ not get included in the package.
 
 #+begin_src emacs-lisp
 (ert-deftest test-lisp-butt-1 ()
-  "test switch mode on and off."
-  (lisp-butt-mode)
-  (lisp-butt-mode)
-  (should t))
+  "test if the basic function is available at all."
+  (with-temp-buffer
+    (lisp-interaction-mode)
+    (lisp-butt-mode)))
 #+end_src
 
 **** Last Lines
