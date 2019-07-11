@@ -9,7 +9,7 @@
 ;; Author: Marco Wahl <marcowahlsoft@gmail.com>
 ;; Maintainer: Marco Wahl <marcowahlsoft@gmail.com>
 ;; Created: [2019-07-11]
-;; Version: 0.0.0
+;; Version: 0.0.1
 ;; Package-Requires: ((emacs "25"))
 ;; Keywords: reading, programming
 ;; 
@@ -78,6 +78,7 @@
           ".")
          nil)))))
 
+;;;###autoload
 (defun lisp-butt-unfontify ()
   "Unfontify lisp butt at point."
   (interactive)
@@ -106,6 +107,7 @@
    (t (lisp-butt-unset-slim-display)))
   (font-lock-mode 1))
 
+;;;###autoload
 (define-global-minor-mode global-lisp-butt-mode
   lisp-butt-mode
   (lambda ()

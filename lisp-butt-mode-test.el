@@ -8,7 +8,7 @@
 ;; Author: Marco Wahl <marcowahlsoft@gmail.com>
 ;; Maintainer: Marco Wahl <marcowahlsoft@gmail.com>
 ;; Created: [2019-07-11]
-;; Version: 0.0.0
+;; Version: 0.0.1
 ;; Package-Requires: ((emacs "25"))
 ;; Keywords: reading, programming
 ;; 
