@@ -1,4 +1,4 @@
-;;; lisp-butt-mode.el --- Surrogates for tags  -*- lexical-binding: t -*-
+;;; lisp-butt-mode.el --- Slim lisp butts -*- lexical-binding: t -*-
 
 ;; THIS FILE HAS BEEN GENERATED.  For sustainable program-development
 ;; edit the literate source file "lisp-butt-mode.org".  Find also
@@ -29,9 +29,23 @@
 
 ;;; Commentary:
 
+;; There is a global `global-lisp-butt-mode' and a local `lisp-butt-mode'
+;; variant.
+;; 
+;; Global:
+;; 
+;; - Toggle the mode with {M-x global-lisp-butt-mode RET}.
+;; - Activate the mode with {C-u M-x global-lisp-butt-mode RET}.
+;; - Deactivate the mode with {C-u -1 M-x global-lisp-butt-mode RET}.
+;; 
+;; Local:
+;; 
 ;; - Toggle the mode with {M-x lisp-butt-mode RET}.
 ;; - Activate the mode with {C-u M-x lisp-butt-mode RET}.
 ;; - Deactivate the mode with {C-u -1 M-x lisp-butt-mode RET}.
+;; 
+;; Further {M-x lisp-butt-unfontify} unveils the full butt at the cursor
+;; temporarily.
 ;; 
 ;; See also the literate source file.  E.g. see
 ;; https://gitlab.com/marcowahl/lisp-butt-mode.
@@ -42,13 +56,9 @@
 
 (require 'cl-lib) ; for `cl-assert'
 
-(defun lisp-butt-slim-display ()
-  "Function to produce nicer lisp butts.
-This function can be hooked into the modes of interest.  E.g.
-(add-hook 'emacs-lisp-mode-hook #'lisp-butt-slim-display)
-(add-hook 'lisp-mode-hook #'lisp-butt-slim-display)
-
-Hint: see the usual butts by turning off font-lock."
+(defun lisp-butt-set-slim-display ()
+  "Function to produce nicer lisp butts."
+  (cl-assert (derived-mode-p 'lisp-mode 'emacs-lisp-mode))
   (font-lock-add-keywords
    nil
    '((")\\())+\\))"
@@ -57,17 +67,19 @@ Hint: see the usual butts by turning off font-lock."
           ".")
          nil)))))
 
-(defun lisp-butt-fontify ()
-  "Fontify lisp butt."
-  (interactive)
-  (while (string= ")" (buffer-substring-no-properties (1- (point)) (point)))
-    (goto-char (1- (point))))
-  (re-search-forward ")*")
-  (unless (= (match-beginning 0) (match-end 0))
-    (font-lock-fontify-region (1+ (match-beginning 0)) (1- (match-end 0)))))
+(defun lisp-butt-unset-slim-display ()
+  "Function to undo the nicer lisp butts."
+  (cl-assert (derived-mode-p 'lisp-mode 'emacs-lisp-mode))
+  (font-lock-remove-keywords
+   nil
+   '((")\\())+\\))"
+      (1 (compose-region
+          (match-beginning 1) (match-end 1)
+          ".")
+         nil)))))
 
 (defun lisp-butt-unfontify ()
-  "Unfontify lisp butt."
+  "Unfontify lisp butt at point."
   (interactive)
   (while (string= ")" (buffer-substring-no-properties (1- (point)) (point)))
     (goto-char (1- (point))))
@@ -90,12 +102,15 @@ Hint: see the usual butts by turning off font-lock."
   "Display slim lisp butts."
   :lighter lisp-butt-mode-lighter
   (cond
-   (lisp-butt-mode
-    (add-hook 'emacs-lisp-mode-hook #'lisp-butt-slim-display)
-    (add-hook 'lisp-mode-hook #'lisp-butt-slim-display))
-   (t
-    (remove-hook 'emacs-lisp-mode-hook #'lisp-butt-slim-display)
-    (remove-hook 'lisp-mode-hook #'lisp-butt-slim-display))))
+   (lisp-butt-mode (lisp-butt-set-slim-display))
+   (t (lisp-butt-unset-slim-display)))
+  (font-lock-mode 1))
+
+(define-global-minor-mode global-lisp-butt-mode
+  lisp-butt-mode
+  (lambda ()
+    (if (derived-mode-p 'lisp-mode 'emacs-lisp-mode)
+        (lisp-butt-mode))))
 
 
 (provide 'lisp-butt-mode)
