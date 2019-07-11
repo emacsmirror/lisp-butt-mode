@@ -93,6 +93,7 @@ Created: [2019-07-11]
 Version: <<lisp-butt-version>>
 Package-Requires: ((emacs "25"))
 Keywords: reading, programming
+URL: https://gitlab.com/marcowahl/lisp-butt-mode
 #+end_src
 
 *** Copyright
