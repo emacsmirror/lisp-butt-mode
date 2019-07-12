@@ -57,6 +57,12 @@
 
 (require 'cl-lib) ; for `cl-assert'
 
+(defcustom lisp-butt-hole
+  ?.
+  "The character replacing the hole."
+  :type 'character
+  :group 'lisp-butt)
+
 (defun lisp-butt-set-slim-display ()
   "Function to produce nicer lisp butts."
   (cl-assert (derived-mode-p 'lisp-mode 'emacs-lisp-mode))
@@ -65,7 +71,7 @@
    '((")\\())+\\))"
       (1 (compose-region
           (match-beginning 1) (match-end 1)
-          ".")
+          (char-to-string lisp-butt-hole))
          nil)))))
 
 (defun lisp-butt-unset-slim-display ()
@@ -76,7 +82,7 @@
    '((")\\())+\\))"
       (1 (compose-region
           (match-beginning 1) (match-end 1)
-          ".")
+          (char-to-string lisp-butt-hole))
          nil)))))
 
 ;;;###autoload
