@@ -190,6 +190,14 @@ Hint: look how it's done at org-pretty-tags.
 
 * Code
 
+** meta
+
+#+name: page-break
+#+begin_src emacs-lisp :tangle no
+
+
+#+end_src
+
 ** Functionality
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle lisp-butt-mode.el
@@ -202,18 +210,16 @@ Hint: look how it's done at org-pretty-tags.
 
 #+begin_src emacs-lisp :noweb yes
 ;;; lisp-butt-mode.el --- Slim lisp butts -*- lexical-binding: t -*-
-
+<<page-break>>
 ;; THIS FILE HAS BEEN GENERATED.  For sustainable program-development
 ;; edit the literate source file "lisp-butt-mode.org".  Find also
 ;; additional information there.
-
+<<page-break>>
 ;; <<copyright>>
-
-
+<<page-break>>
 ;;; Commentary:
 
 ;; <<description-activate>>
-
 #+end_src
 
 **** code section header
@@ -221,8 +227,8 @@ Hint: look how it's done at org-pretty-tags.
 :ID:       12bb6a92-216b-4320-a1b5-ef7061836764
 :END:
 
-#+begin_src emacs-lisp
-
+#+begin_src emacs-lisp :noweb yes
+<<page-break>>
 ;;; Code:
 #+end_src
 
@@ -245,9 +251,63 @@ this subtree.
 :ID:       44b48b71-90f0-47e8-89ce-53b49239b550
 :END:
 
-#+begin_src emacs-lisp
-
+#+begin_src emacs-lisp :noweb yes
+<<page-break>>
+;; dependencies
+
 (require 'cl-lib) ; for `cl-assert'
+#+end_src
+
+**** customizable items
+:PROPERTIES:
+:ID:       6e30b8b7-76a5-47f0-972a-5fb113330034
+:END:
+
+#+begin_src emacs-lisp :noweb yes
+<<page-break>>
+;; customizable
+
+#+end_src
+
+***** the hole
+:PROPERTIES:
+:ID:       99ea61ea-a4bb-4c8c-8ec0-d45655bf0a27
+:END:
+
+The default replacement looks like
+
+#+begin_src text
+).)
+#+end_src
+
+The character in the middle can be customized to get e.g.
+
+#+begin_src text
+)*)
+#+end_src
+
+#+begin_src emacs-lisp
+(defcustom lisp-butt-hole
+  ?.
+  "The character replacing the hole."
+  :type 'character
+  :group 'lisp-butt)
+#+end_src
+
+***** the lighter
+:PROPERTIES:
+:ID:       c3b66311-68ab-4cab-acfe-6cd96870d7d5
+:END:
+
+The indication string (aka lighter) of the mode in the mode line can
+be customized.
+
+#+begin_src emacs-lisp
+(defcustom lisp-butt-mode-lighter
+  " (.)"
+  "Text in the mode line to indicate that the mode is on."
+  :type 'string
+  :group 'lisp-butt)
 #+end_src
 
 **** functions
@@ -260,7 +320,10 @@ this subtree.
 :ID:       6c42d95c-525c-4960-a843-f1e5870ae76a
 :END:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :noweb yes
+<<page-break>>
+;; core
+
 (defun lisp-butt-set-slim-display ()
   "Function to produce nicer lisp butts."
   (cl-assert (derived-mode-p 'lisp-mode 'emacs-lisp-mode))
@@ -269,7 +332,7 @@ this subtree.
    '((")\\())+\\))"
       (1 (compose-region
           (match-beginning 1) (match-end 1)
-          ".")
+          (char-to-string lisp-butt-hole))
          nil)))))
 
 (defun lisp-butt-unset-slim-display ()
@@ -280,7 +343,7 @@ this subtree.
    '((")\\())+\\))"
       (1 (compose-region
           (match-beginning 1) (match-end 1)
-          ".")
+          (char-to-string lisp-butt-hole))
          nil)))))
 #+end_src
 
@@ -302,28 +365,12 @@ this subtree.
 #+end_src
 
 **** the mode
-
-***** minor-mode lighter
 :PROPERTIES:
-:ID:       80867f2f-2497-4310-a172-4abd272af6f8
+:ID:       8fa0ad24-a4e6-4d19-b18b-751c9711918d
 :END:
 
-#+begin_src emacs-lisp
-;;;###autoload
-(defcustom lisp-butt-mode-lighter
-  " (.)"
-  "Text in the mode line to indicate that the mode is on."
-  :type 'string
-  :group 'lisp-butt)
-#+end_src
-
-***** define the modes
-:PROPERTIES:
-:ID:       a3d9cc59-89aa-4165-a844-90da8531b46f
-:END:
-
-#+begin_src emacs-lisp
-
+#+begin_src emacs-lisp :noweb yes
+<<page-break>>
 ;; mode definition
 
 ;;;###autoload
@@ -348,13 +395,12 @@ this subtree.
 :ID:       300d188f-9b90-4bd8-9d65-78823402a3de
 :END:
 
-#+begin_src emacs-lisp
-
+#+begin_src emacs-lisp :noweb yes
+<<page-break>>
 (provide 'lisp-butt-mode)
-
+
 ;;; lisp-butt-mode.el ends here
 #+end_src
-
 
 ** Testing
 
