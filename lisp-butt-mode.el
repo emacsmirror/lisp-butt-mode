@@ -1,9 +1,11 @@
 ;;; lisp-butt-mode.el --- Slim lisp butts -*- lexical-binding: t -*-
+
 
 ;; THIS FILE HAS BEEN GENERATED.  For sustainable program-development
 ;; edit the literate source file "lisp-butt-mode.org".  Find also
 ;; additional information there.
 
+
 ;; Copyright 2019 Marco Wahl
 ;; 
 ;; Author: Marco Wahl <marcowahlsoft@gmail.com>
@@ -55,13 +57,27 @@
 ;;; Code:
 
 
+;; dependencies
+
 (require 'cl-lib) ; for `cl-assert'
+
+
+;; customizable
 
 (defcustom lisp-butt-hole
   ?.
   "The character replacing the hole."
   :type 'character
   :group 'lisp-butt)
+
+(defcustom lisp-butt-mode-lighter
+  " (.)"
+  "Text in the mode line to indicate that the mode is on."
+  :type 'string
+  :group 'lisp-butt)
+
+
+;; core
 
 (defun lisp-butt-set-slim-display ()
   "Function to produce nicer lisp butts."
@@ -95,13 +111,6 @@
   (unless (= (match-beginning 0) (match-end 0))
     (font-lock-unfontify-region (1+ (match-beginning 0)) (1- (match-end 0)))))
 
-;;;###autoload
-(defcustom lisp-butt-mode-lighter
-  " (.)"
-  "Text in the mode line to indicate that the mode is on."
-  :type 'string
-  :group 'lisp-butt)
-
 
 ;; mode definition
 
@@ -123,5 +132,5 @@
 
 
 (provide 'lisp-butt-mode)
-
+
 ;;; lisp-butt-mode.el ends here
