@@ -1,4 +1,4 @@
-;;; lisp-butt-mode.el --- Slim lisp butts -*- lexical-binding: t -*-
+;;; lisp-butt-mode.el --- Slim Lisp butts -*- lexical-binding: t -*-
 
 
 ;; THIS FILE HAS BEEN GENERATED.  For sustainable program-development
@@ -27,7 +27,7 @@
 ;; GNU General Public License for more details.
 ;; 
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
 ;;; Commentary:
@@ -85,7 +85,7 @@
 ;; core
 
 (defun lisp-butt-set-slim-display ()
-  "Function to produce nicer lisp butts."
+  "Function to produce nicer Lisp butts."
   (cl-assert (derived-mode-p 'lisp-mode 'emacs-lisp-mode))
   (font-lock-add-keywords
    nil
@@ -96,7 +96,7 @@
          nil)))))
 
 (defun lisp-butt-unset-slim-display ()
-  "Function to undo the nicer lisp butts."
+  "Function to undo the nicer Lisp butts."
   (cl-assert (derived-mode-p 'lisp-mode 'emacs-lisp-mode))
   (font-lock-remove-keywords
    nil
@@ -108,7 +108,7 @@
 
 ;;;###autoload
 (defun lisp-butt-unfontify ()
-  "Unfontify lisp butt at point."
+  "Unfontify Lisp butt at point."
   (interactive)
   (while (string= ")" (buffer-substring-no-properties (1- (point)) (point)))
     (goto-char (1- (point))))

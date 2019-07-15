@@ -120,7 +120,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #+end_src
 
 ** About this Program
@@ -214,7 +214,7 @@ Hint: look how it's done at org-pretty-tags.
 :END:
 
 #+begin_src emacs-lisp :noweb yes
-;;; lisp-butt-mode.el --- Slim lisp butts -*- lexical-binding: t -*-
+;;; lisp-butt-mode.el --- Slim Lisp butts -*- lexical-binding: t -*-
 <<page-break>>
 ;; THIS FILE HAS BEEN GENERATED.  For sustainable program-development
 ;; edit the literate source file "lisp-butt-mode.org".  Find also
@@ -330,7 +330,7 @@ be customized.
 ;; core
 
 (defun lisp-butt-set-slim-display ()
-  "Function to produce nicer lisp butts."
+  "Function to produce nicer Lisp butts."
   (cl-assert (derived-mode-p 'lisp-mode 'emacs-lisp-mode))
   (font-lock-add-keywords
    nil
@@ -341,7 +341,7 @@ be customized.
          nil)))))
 
 (defun lisp-butt-unset-slim-display ()
-  "Function to undo the nicer lisp butts."
+  "Function to undo the nicer Lisp butts."
   (cl-assert (derived-mode-p 'lisp-mode 'emacs-lisp-mode))
   (font-lock-remove-keywords
    nil
@@ -360,7 +360,7 @@ be customized.
 #+begin_src emacs-lisp
 ;;;###autoload
 (defun lisp-butt-unfontify ()
-  "Unfontify lisp butt at point."
+  "Unfontify Lisp butt at point."
   (interactive)
   (while (string= ")" (buffer-substring-no-properties (1- (point)) (point)))
     (goto-char (1- (point))))
