@@ -126,7 +126,7 @@
   (cond
    (lisp-butt-mode (lisp-butt-set-slim-display))
    (t (lisp-butt-unset-slim-display)))
-  (font-lock-mode 1))
+  (font-lock-flush))
 
 ;;;###autoload
 (define-global-minor-mode global-lisp-butt-mode
