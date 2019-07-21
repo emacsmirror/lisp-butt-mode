@@ -339,7 +339,7 @@ The modes considered by global-lisp-butt-mode.
    '((")\\())+\\))"
       (1 (compose-region
           (match-beginning 1) (match-end 1)
-          (char-to-string lisp-butt-hole))
+          lisp-butt-hole)
          nil)))))
 
 (defun lisp-butt-unset-slim-display ()
@@ -349,7 +349,7 @@ The modes considered by global-lisp-butt-mode.
    '((")\\())+\\))"
       (1 (compose-region
           (match-beginning 1) (match-end 1)
-          (char-to-string lisp-butt-hole))
+          lisp-butt-hole)
          nil)))))
 #+end_src
 
