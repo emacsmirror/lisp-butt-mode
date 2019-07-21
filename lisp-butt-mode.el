@@ -92,7 +92,7 @@
    '((")\\())+\\))"
       (1 (compose-region
           (match-beginning 1) (match-end 1)
-          (char-to-string lisp-butt-hole))
+          lisp-butt-hole)
          nil)))))
 
 (defun lisp-butt-unset-slim-display ()
@@ -102,18 +102,21 @@
    '((")\\())+\\))"
       (1 (compose-region
           (match-beginning 1) (match-end 1)
-          (char-to-string lisp-butt-hole))
+          lisp-butt-hole)
          nil)))))
 
 ;;;###autoload
 (defun lisp-butt-unfontify ()
   "Unfontify Lisp butt at point."
   (interactive)
-  (while (string= ")" (buffer-substring-no-properties (1- (point)) (point)))
-    (goto-char (1- (point))))
-  (re-search-forward ")*")
-  (unless (= (match-beginning 0) (match-end 0))
-    (font-lock-unfontify-region (1+ (match-beginning 0)) (1- (match-end 0)))))
+  (while (and (< (point-min) (point))
+              (string= ")" (buffer-substring-no-properties (1- (point)) (point))))
+    (backward-char))
+  (save-match-data
+    (re-search-forward ")*")
+    (font-lock-unfontify-region
+;;decompose-region
+     (match-beginning 0) (match-end 0))))
 
 
 ;; mode definition
