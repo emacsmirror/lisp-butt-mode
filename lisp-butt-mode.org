@@ -251,18 +251,6 @@ this subtree.
 # :header-args:emacs-lisp+: :comments both
 :END:
 
-**** requires
-:PROPERTIES:
-:ID:       44b48b71-90f0-47e8-89ce-53b49239b550
-:END:
-
-#+begin_src emacs-lisp :noweb yes
-<<page-break>>
-;; dependencies
-
-(require 'cl-lib) ; for `cl-assert'
-#+end_src
-
 **** customizable items
 :PROPERTIES:
 :ID:       6e30b8b7-76a5-47f0-972a-5fb113330034
@@ -324,7 +312,7 @@ The modes considered by global-lisp-butt-mode.
 
 #+begin_src emacs-lisp
 (defcustom lisp-butt-modes
-  '(lisp-mode emacs-lisp-mode)
+  '(lisp-mode emacs-lisp-mode clojure-mode)
   "Modes considered by `global-lisp-butt-mode'."
   :type '(repeat symbol)
   :group 'lisp-butt)
@@ -346,7 +334,6 @@ The modes considered by global-lisp-butt-mode.
 
 (defun lisp-butt-set-slim-display ()
   "Function to produce nicer Lisp butts."
-  (cl-assert (derived-mode-p 'lisp-mode 'emacs-lisp-mode))
   (font-lock-add-keywords
    nil
    '((")\\())+\\))"
@@ -357,7 +344,6 @@ The modes considered by global-lisp-butt-mode.
 
 (defun lisp-butt-unset-slim-display ()
   "Function to undo the nicer Lisp butts."
-  (cl-assert (derived-mode-p 'lisp-mode 'emacs-lisp-mode))
   (font-lock-remove-keywords
    nil
    '((")\\())+\\))"

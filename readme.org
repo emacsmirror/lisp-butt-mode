@@ -1,6 +1,6 @@
 #+title: Slim lisp butts
 
-* About
+* [#A] About
 :PROPERTIES:
 :EXPORT_FILE_NAME: doc-org-pretty-tags
 :END:
@@ -315,6 +315,21 @@ be customized.
   :group 'lisp-butt)
 #+end_src
 
+***** the modes for "global" mode
+:PROPERTIES:
+:ID:       df83e986-da18-4e27-a088-1a2383086137
+:END:
+
+The modes considered by global-lisp-butt-mode.
+
+#+begin_src emacs-lisp
+(defcustom lisp-butt-modes
+  '(lisp-mode emacs-lisp-mode)
+  "Modes considered by `global-lisp-butt-mode'."
+  :type '(repeat symbol)
+  :group 'lisp-butt)
+#+end_src
+
 **** functions
 :PROPERTIES:
 :ID:       2846e96a-7344-4deb-8589-9fbdaeeffd5e
@@ -331,7 +346,6 @@ be customized.
 
 (defun lisp-butt-set-slim-display ()
   "Function to produce nicer Lisp butts."
-  (cl-assert (derived-mode-p 'lisp-mode 'emacs-lisp-mode))
   (font-lock-add-keywords
    nil
    '((")\\())+\\))"
@@ -342,7 +356,6 @@ be customized.
 
 (defun lisp-butt-unset-slim-display ()
   "Function to undo the nicer Lisp butts."
-  (cl-assert (derived-mode-p 'lisp-mode 'emacs-lisp-mode))
   (font-lock-remove-keywords
    nil
    '((")\\())+\\))"
@@ -391,7 +404,7 @@ be customized.
 (define-global-minor-mode global-lisp-butt-mode
   lisp-butt-mode
   (lambda ()
-    (if (derived-mode-p 'lisp-mode 'emacs-lisp-mode)
+    (when (apply #'derived-mode-p lisp-butt-modes)
         (lisp-butt-mode))))
 #+end_src
 
