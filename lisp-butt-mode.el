@@ -62,11 +62,6 @@
 ;;; Code:
 
 
-;; dependencies
-
-(require 'cl-lib) ; for `cl-assert'
-
-
 ;; customizable
 
 (defcustom lisp-butt-hole
@@ -81,12 +76,17 @@
   :type 'string
   :group 'lisp-butt)
 
+(defcustom lisp-butt-modes
+  '(lisp-mode emacs-lisp-mode clojure-mode)
+  "Modes considered by `global-lisp-butt-mode'."
+  :type '(repeat symbol)
+  :group 'lisp-butt)
+
 
 ;; core
 
 (defun lisp-butt-set-slim-display ()
   "Function to produce nicer Lisp butts."
-  (cl-assert (derived-mode-p 'lisp-mode 'emacs-lisp-mode))
   (font-lock-add-keywords
    nil
    '((")\\())+\\))"
@@ -97,7 +97,6 @@
 
 (defun lisp-butt-unset-slim-display ()
   "Function to undo the nicer Lisp butts."
-  (cl-assert (derived-mode-p 'lisp-mode 'emacs-lisp-mode))
   (font-lock-remove-keywords
    nil
    '((")\\())+\\))"
@@ -132,7 +131,7 @@
 (define-global-minor-mode global-lisp-butt-mode
   lisp-butt-mode
   (lambda ()
-    (if (derived-mode-p 'lisp-mode 'emacs-lisp-mode)
+    (when (apply #'derived-mode-p lisp-butt-modes)
         (lisp-butt-mode))))
 
 
