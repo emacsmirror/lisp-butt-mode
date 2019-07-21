@@ -115,7 +115,6 @@
   (save-match-data
     (re-search-forward ")*")
     (font-lock-unfontify-region
-;;decompose-region
      (match-beginning 0) (match-end 0))))
 
 
