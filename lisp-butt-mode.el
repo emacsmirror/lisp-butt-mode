@@ -82,28 +82,30 @@
   :type '(repeat symbol)
   :group 'lisp-butt)
 
+(defvar lisp-butt-regexp ")\\())+\\))")
+
+(defvar lisp-butt-pattern
+  `((,lisp-butt-regexp
+     (1 (compose-region
+         (match-beginning 1) (match-end 1)
+         lisp-butt-hole)
+        nil))))
+
 
 ;; core
 
 (defun lisp-butt-set-slim-display ()
   "Function to produce nicer Lisp butts."
-  (font-lock-add-keywords
-   nil
-   '((")\\())+\\))"
-      (1 (compose-region
-          (match-beginning 1) (match-end 1)
-          lisp-butt-hole)
-         nil)))))
+  (font-lock-add-keywords nil lisp-butt-pattern))
 
 (defun lisp-butt-unset-slim-display ()
   "Function to undo the nicer Lisp butts."
-  (font-lock-remove-keywords
-   nil
-   '((")\\())+\\))"
-      (1 (compose-region
-          (match-beginning 1) (match-end 1)
-          lisp-butt-hole)
-         nil)))))
+  (font-lock-remove-keywords nil lisp-butt-pattern)
+  (save-match-data
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward lisp-butt-regexp nil t)
+        (decompose-region (match-beginning 0) (match-end 0))))))
 
 ;;;###autoload
 (defun lisp-butt-unfontify ()

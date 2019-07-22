@@ -318,6 +318,22 @@ The modes considered by global-lisp-butt-mode.
   :group 'lisp-butt)
 #+end_src
 
+**** variables
+:PROPERTIES:
+:ID:       010604e0-1177-488c-bb6a-837c7216fdde
+:END:
+
+#+begin_src emacs-lisp
+(defvar lisp-butt-regexp ")\\())+\\))")
+
+(defvar lisp-butt-pattern
+  `((,lisp-butt-regexp
+     (1 (compose-region
+         (match-beginning 1) (match-end 1)
+         lisp-butt-hole)
+        nil))))
+#+end_src
+
 **** functions
 :PROPERTIES:
 :ID:       2846e96a-7344-4deb-8589-9fbdaeeffd5e
@@ -334,23 +350,16 @@ The modes considered by global-lisp-butt-mode.
 
 (defun lisp-butt-set-slim-display ()
   "Function to produce nicer Lisp butts."
-  (font-lock-add-keywords
-   nil
-   '((")\\())+\\))"
-      (1 (compose-region
-          (match-beginning 1) (match-end 1)
-          lisp-butt-hole)
-         nil)))))
+  (font-lock-add-keywords nil lisp-butt-pattern))
 
 (defun lisp-butt-unset-slim-display ()
   "Function to undo the nicer Lisp butts."
-  (font-lock-remove-keywords
-   nil
-   '((")\\())+\\))"
-      (1 (compose-region
-          (match-beginning 1) (match-end 1)
-          lisp-butt-hole)
-         nil)))))
+  (font-lock-remove-keywords nil lisp-butt-pattern)
+  (save-match-data
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward lisp-butt-regexp nil t)
+        (decompose-region (match-beginning 0) (match-end 0))))))
 #+end_src
 
 ***** direct unfontification
