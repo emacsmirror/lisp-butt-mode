@@ -485,16 +485,68 @@ not get included in the package.
 :END:
 
 #+begin_src emacs-lisp
-(ert-deftest test-lisp-butt-1 ()
+(ert-deftest 0f10d2c6dfc87cf21674ab887bf748ba6d296d1d ()
   "test if the basic function is available at all."
   (with-temp-buffer
     (lisp-interaction-mode)
     (lisp-butt-mode)))
 #+end_src
 
-***** basic effect
+***** mode on/off
 
-****** turn the on mode
+****** turn on the mode
+:PROPERTIES:
+:ID:       4c932e52-a9a7-49e4-9df1-9161289bef0e
+:END:
+
+#+begin_src emacs-lisp
+(ert-deftest 9d64a351fdea5be260e3018eb6f3d2cd605c1cfc ()
+  "test buttification when turning on lisp-butt-mode."
+  (with-temp-buffer
+    (lisp-mode)
+    (font-lock-mode)
+    (insert "(((())))")
+    (lisp-butt-mode)
+    (font-lock-ensure)
+    (should (find-composition 6))))
+#+end_src
+
+****** turn off the mode
+:PROPERTIES:
+:ID:       086aa050-db0a-45ed-b03b-4e1d722e0125
+:END:
+
+#+begin_src emacs-lisp
+(ert-deftest 9a156d463d7bc4acefdfc1290cbad50da50b5e91 ()
+  "test buttification when turning on lisp-butt-mode."
+  (with-temp-buffer
+    (lisp-mode)
+    (font-lock-mode)
+    (insert "(((())))")
+    (lisp-butt-mode)
+    (font-lock-ensure)
+    (lisp-butt-mode -1)
+    (should-not (find-composition 6))))
+#+end_src
+
+***** decompose butt at point
+:PROPERTIES:
+:ID:       d758d5b9-c75f-43d5-8dc7-8ee12800dcc0
+:END:
+
+#+begin_src emacs-lisp
+(ert-deftest f5eed54b59f148d9fd2df4d178b97f6cea632eef ()
+  "test buttification when turning on lisp-butt-mode."
+  (with-temp-buffer
+    (lisp-mode)
+    (font-lock-mode)
+    (insert "(((())))")
+    (lisp-butt-mode)
+    (font-lock-ensure)
+    (goto-char 6)
+    (lisp-butt-unfontify)
+    (should-not (find-composition 6))))
+#+end_src
 
 **** Last Lines
 :PROPERTIES:
