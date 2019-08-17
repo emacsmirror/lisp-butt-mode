@@ -39,13 +39,19 @@
 (require 'lisp-butt-mode)
 ;; Tests:1 ends here
 
-;; [[id:dac141b6-e0a8-4312-8022-90b08fce4c84][Tests:2]]
+;; existence of the program
+;; :PROPERTIES:
+;; :ID:       64deaaad-d23f-485b-97a7-3ed650afcd03
+;; :END:
+
+
+;; [[id:64deaaad-d23f-485b-97a7-3ed650afcd03][existence of the program:1]]
 (ert-deftest test-lisp-butt-1 ()
   "test if the basic function is available at all."
   (with-temp-buffer
     (lisp-interaction-mode)
     (lisp-butt-mode)))
-;; Tests:2 ends here
+;; existence of the program:1 ends here
 
 
 (provide 'lisp-butt-test)

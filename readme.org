@@ -1,6 +1,6 @@
-#+title: Slim lisp butts
+#+title: Slim Lisp Butts
 
-* [#A] About
+* About
 :PROPERTIES:
 :EXPORT_FILE_NAME: doc-org-pretty-tags
 :END:
@@ -56,15 +56,15 @@ Local:
 - Activate the mode with {C-u M-x lisp-butt-mode RET}.
 - Deactivate the mode with {C-u -1 M-x lisp-butt-mode RET}.
 
+Unveil the full butt at the cursor temporarily with
+
     {M-x lisp-butt-unfontify}
 
-unveils the full butt at the cursor temporarily.
-
-The appearance can be configured to some extend.  See
+Some configuration is possible.  See
 
     {M-x customize-group RET lisp-butt RET}
 
-See also the literate source file.  E.g. see
+See also the literate source file for modifying the whole thing.  E.g. see
 https://gitlab.com/marcowahl/lisp-butt-mode.
 #+end_src
 
@@ -183,6 +183,10 @@ marcowahlsoft@gmail.com.
 
 *** Open
 
+**** TODO Make lisp-butt-unfontify functional for emacs -Q
+
+- Weird: lisp-butt-unfontify works in the maintainer's environment.
+
 *** Closed
 
 **** DONE Write cleanly to switch on/off for a file
@@ -214,7 +218,7 @@ Hint: look how it's done at org-pretty-tags.
 :END:
 
 #+begin_src emacs-lisp :noweb yes
-;;; lisp-butt-mode.el --- Slim Lisp butts -*- lexical-binding: t -*-
+;;; lisp-butt-mode.el --- Slim Lisp Butts -*- lexical-binding: t -*-
 <<page-break>>
 ;; THIS FILE HAS BEEN GENERATED.  For sustainable program-development
 ;; edit the literate source file "lisp-butt-mode.org".  Find also
@@ -250,18 +254,6 @@ this subtree.
 # :header-args:emacs-lisp+: :comments no
 # :header-args:emacs-lisp+: :comments both
 :END:
-
-**** requires
-:PROPERTIES:
-:ID:       44b48b71-90f0-47e8-89ce-53b49239b550
-:END:
-
-#+begin_src emacs-lisp :noweb yes
-<<page-break>>
-;; dependencies
-
-(require 'cl-lib) ; for `cl-assert'
-#+end_src
 
 **** customizable items
 :PROPERTIES:
@@ -324,10 +316,26 @@ The modes considered by global-lisp-butt-mode.
 
 #+begin_src emacs-lisp
 (defcustom lisp-butt-modes
-  '(lisp-mode emacs-lisp-mode)
+  '(lisp-mode emacs-lisp-mode clojure-mode)
   "Modes considered by `global-lisp-butt-mode'."
   :type '(repeat symbol)
   :group 'lisp-butt)
+#+end_src
+
+**** variables
+:PROPERTIES:
+:ID:       010604e0-1177-488c-bb6a-837c7216fdde
+:END:
+
+#+begin_src emacs-lisp
+(defvar lisp-butt-regexp ")\\())+\\))")
+
+(defvar lisp-butt-pattern
+  `((,lisp-butt-regexp
+     (1 (compose-region
+         (match-beginning 1) (match-end 1)
+         lisp-butt-hole)
+        nil))))
 #+end_src
 
 **** functions
@@ -346,23 +354,16 @@ The modes considered by global-lisp-butt-mode.
 
 (defun lisp-butt-set-slim-display ()
   "Function to produce nicer Lisp butts."
-  (font-lock-add-keywords
-   nil
-   '((")\\())+\\))"
-      (1 (compose-region
-          (match-beginning 1) (match-end 1)
-          (char-to-string lisp-butt-hole))
-         nil)))))
+  (font-lock-add-keywords nil lisp-butt-pattern))
 
 (defun lisp-butt-unset-slim-display ()
   "Function to undo the nicer Lisp butts."
-  (font-lock-remove-keywords
-   nil
-   '((")\\())+\\))"
-      (1 (compose-region
-          (match-beginning 1) (match-end 1)
-          (char-to-string lisp-butt-hole))
-         nil)))))
+  (font-lock-remove-keywords nil lisp-butt-pattern)
+  (save-match-data
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward lisp-butt-regexp nil t)
+        (decompose-region (match-beginning 0) (match-end 0))))))
 #+end_src
 
 ***** direct unfontification
@@ -375,11 +376,13 @@ The modes considered by global-lisp-butt-mode.
 (defun lisp-butt-unfontify ()
   "Unfontify Lisp butt at point."
   (interactive)
-  (while (string= ")" (buffer-substring-no-properties (1- (point)) (point)))
-    (goto-char (1- (point))))
-  (re-search-forward ")*")
-  (unless (= (match-beginning 0) (match-end 0))
-    (font-lock-unfontify-region (1+ (match-beginning 0)) (1- (match-end 0)))))
+  (while (and (< (point-min) (point))
+              (string= ")" (buffer-substring-no-properties (1- (point)) (point))))
+    (backward-char))
+  (save-match-data
+    (re-search-forward ")*")
+    (font-lock-unfontify-region
+     (match-beginning 0) (match-end 0))))
 #+end_src
 
 **** the mode
@@ -430,6 +433,7 @@ The modes considered by global-lisp-butt-mode.
 # <(trigger tests)>
 
 #+begin_src emacs-lisp :results silent
+(require 'ert)
 (let ((apath "."))
   (org-babel-tangle-file "lisp-butt-mode.org")
   (ert-delete-all-tests)
@@ -475,6 +479,11 @@ not get included in the package.
 (require 'lisp-butt-mode)
 #+end_src
 
+***** existence of the program
+:PROPERTIES:
+:ID:       64deaaad-d23f-485b-97a7-3ed650afcd03
+:END:
+
 #+begin_src emacs-lisp
 (ert-deftest test-lisp-butt-1 ()
   "test if the basic function is available at all."
@@ -482,6 +491,10 @@ not get included in the package.
     (lisp-interaction-mode)
     (lisp-butt-mode)))
 #+end_src
+
+***** basic effect
+
+****** turn the on mode
 
 **** Last Lines
 :PROPERTIES:
