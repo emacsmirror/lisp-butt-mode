@@ -1,4 +1,4 @@
-;;; lisp-butt-mode.el --- Slim Lisp butts -*- lexical-binding: t -*-
+;;; lisp-butt-mode.el --- Slim Lisp Butts -*- lexical-binding: t -*-
 
 
 ;; THIS FILE HAS BEEN GENERATED.  For sustainable program-development

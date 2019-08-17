@@ -218,7 +218,7 @@ Hint: look how it's done at org-pretty-tags.
 :END:
 
 #+begin_src emacs-lisp :noweb yes
-;;; lisp-butt-mode.el --- Slim Lisp butts -*- lexical-binding: t -*-
+;;; lisp-butt-mode.el --- Slim Lisp Butts -*- lexical-binding: t -*-
 <<page-break>>
 ;; THIS FILE HAS BEEN GENERATED.  For sustainable program-development
 ;; edit the literate source file "lisp-butt-mode.org".  Find also
