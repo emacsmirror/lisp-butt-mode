@@ -183,6 +183,10 @@ marcowahlsoft@gmail.com.
 
 *** Open
 
+**** TODO Make lisp-butt-unfontify functional for emacs -Q
+
+- Weird: lisp-butt-unfontify works in the maintainer's environment.
+
 *** Closed
 
 **** DONE Write cleanly to switch on/off for a file
