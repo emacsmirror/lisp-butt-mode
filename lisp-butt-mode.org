@@ -1,4 +1,4 @@
-#+title: Slim lisp butts
+#+title: Slim Lisp Butts
 
 * About
 :PROPERTIES:
@@ -433,6 +433,7 @@ The modes considered by global-lisp-butt-mode.
 # <(trigger tests)>
 
 #+begin_src emacs-lisp :results silent
+(require 'ert)
 (let ((apath "."))
   (org-babel-tangle-file "lisp-butt-mode.org")
   (ert-delete-all-tests)
@@ -478,6 +479,11 @@ not get included in the package.
 (require 'lisp-butt-mode)
 #+end_src
 
+***** existence of the program
+:PROPERTIES:
+:ID:       64deaaad-d23f-485b-97a7-3ed650afcd03
+:END:
+
 #+begin_src emacs-lisp
 (ert-deftest test-lisp-butt-1 ()
   "test if the basic function is available at all."
@@ -485,6 +491,10 @@ not get included in the package.
     (lisp-interaction-mode)
     (lisp-butt-mode)))
 #+end_src
+
+***** basic effect
+
+****** turn the on mode
 
 **** Last Lines
 :PROPERTIES:
