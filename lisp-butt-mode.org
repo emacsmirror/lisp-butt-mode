@@ -382,7 +382,10 @@ The modes considered by global-lisp-butt-mode.
   (save-match-data
     (re-search-forward ")*")
     (font-lock-unfontify-region
-     (match-beginning 0) (match-end 0))))
+     (match-beginning 0) (match-end 0))
+    (let ((composi (find-composition (- (match-end 0) 2))))
+      (when composi
+	(decompose-region (nth 0 composi) (nth 1 composi))))))
 #+end_src
 
 **** the mode
