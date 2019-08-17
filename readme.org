@@ -70,12 +70,24 @@ https://gitlab.com/marcowahl/lisp-butt-mode.
 
 ** Install
 
-Install by adding the respective lines to your init.el:
+Choose one of the following ways to install =lisp-butt-mode=.
+
+*** Directly
+
+File =lisp-butt-mode.el= must be available.
+
+Add the respective lines to your init.el:
 
 #+begin_src emacs-lisp :tangle no
-(push "<path/to/lisp-butt-mode>" load-path)
+(push "<path/to/lisp-butt-mode.el>" load-path)
 (require 'lisp-butt-mode)
 #+end_src
+
+*** Via Package Manager
+
+=lisp-butt-mode= is available via melpa (https://melpa.org).  This
+means =lisp-butt-mode= should be easily accessible per package
+manager.
 
 ** Metadata
 
@@ -183,11 +195,12 @@ marcowahlsoft@gmail.com.
 
 *** Open
 
-**** TODO Make lisp-butt-unfontify functional for emacs -Q
+*** Closed
+
+**** DONE Make lisp-butt-unfontify functional for emacs -Q
 
 - Weird: lisp-butt-unfontify works in the maintainer's environment.
-
-*** Closed
+- [2019-08-18 Sun] added an additional (conditional) decomposition.
 
 **** DONE Write cleanly to switch on/off for a file
 
