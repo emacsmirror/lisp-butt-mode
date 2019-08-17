@@ -11,7 +11,7 @@
 ;; Author: Marco Wahl <marcowahlsoft@gmail.com>
 ;; Maintainer: Marco Wahl <marcowahlsoft@gmail.com>
 ;; Created: [2019-07-11]
-;; Version: 0.0.2
+;; Version: 1.0.0
 ;; Package-Requires: ((emacs "25"))
 ;; Keywords: lisp
 ;; URL: https://gitlab.com/marcowahl/lisp-butt-mode
@@ -117,7 +117,10 @@
   (save-match-data
     (re-search-forward ")*")
     (font-lock-unfontify-region
-     (match-beginning 0) (match-end 0))))
+     (match-beginning 0) (match-end 0))
+    (let ((composi (find-composition (- (match-end 0) 2))))
+      (when composi
+	(decompose-region (nth 0 composi) (nth 1 composi))))))
 
 
 ;; mode definition
