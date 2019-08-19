@@ -25,16 +25,17 @@ these ugly horrific monsters.
 
 ** What the lisp-butt-mode offers
 
+#+name: description-what
+#+begin_src org
 lisp-butt-mode brings fat lisp butts in shape.
 
-#+begin_src text
-))))))))))))))))))))))))))))))))
-#+end_src
+With lisp-butt-mode e.g.
+
+	))))))))))))))))))))))))))))))))
 
 gets displayed nicely as (pun intended):
 
-#+begin_src text
-).)
+	).)
 #+end_src
 
 ** Concrete Use :easy:
@@ -240,6 +241,8 @@ Hint: look how it's done at org-pretty-tags.
 ;; <<copyright>>
 <<page-break>>
 ;;; Commentary:
+
+;; <<description-what>>
 
 ;; <<description-activate>>
 #+end_src
