@@ -138,6 +138,13 @@
 	 (decompose-region (nth 0 composi) (nth 1 composi)))))
    (goto-char point)))
 
+;;;###autoload
+(defun lisp-butt-unfontify-on-paren ()
+  "Unfontify Lisp butt at point when before a paren.
+This is thought to save cpu overall."
+  (when (= 41 (following-char))
+    (lisp-butt-unfontify)))
+
 
 ;; mode definition
 
@@ -147,8 +154,8 @@
   :lighter lisp-butt-mode-lighter
   (cond
    (lisp-butt-mode (lisp-butt-set-slim-display)
-                   (add-hook 'post-command-hook 'lisp-butt-unfontify))
-   (t (remove-hook 'post-command-hook 'lisp-butt-unfontify)
+                   (add-hook 'post-command-hook 'lisp-butt-unfontify-on-paren 0 t))
+   (t (remove-hook 'post-command-hook 'lisp-butt-unfontify-on-paren t)
       (lisp-butt-unset-slim-display)))
   (font-lock-flush))
 
