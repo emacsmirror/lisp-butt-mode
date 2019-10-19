@@ -125,16 +125,18 @@
 (defun lisp-butt-unfontify ()
   "Unfontify Lisp butt at point."
   (interactive)
-  (while (and (< (point-min) (point))
-              (string= ")" (buffer-substring-no-properties (1- (point)) (point))))
-    (backward-char))
-  (save-match-data
-    (re-search-forward ")*")
-    (font-lock-unfontify-region
-     (match-beginning 0) (match-end 0))
-    (let ((composi (find-composition (- (match-end 0) 2))))
-      (when composi
-	(decompose-region (nth 0 composi) (nth 1 composi))))))
+  (let ((point (point)))
+   (while (and (< (point-min) (point))
+               (string= ")" (buffer-substring-no-properties (1- (point)) (point))))
+     (backward-char))
+   (save-match-data
+     (re-search-forward ")*")
+     (font-lock-unfontify-region
+      (match-beginning 0) (match-end 0))
+     (let ((composi (find-composition (- (match-end 0) 2))))
+       (when composi
+	 (decompose-region (nth 0 composi) (nth 1 composi)))))
+   (goto-char point)))
 
 
 ;; mode definition
@@ -144,8 +146,10 @@
   "Display slim lisp butts."
   :lighter lisp-butt-mode-lighter
   (cond
-   (lisp-butt-mode (lisp-butt-set-slim-display))
-   (t (lisp-butt-unset-slim-display)))
+   (lisp-butt-mode (lisp-butt-set-slim-display)
+                   (add-hook 'post-command-hook 'lisp-butt-unfontify))
+   (t (remove-hook 'post-command-hook 'lisp-butt-unfontify)
+      (lisp-butt-unset-slim-display)))
   (font-lock-flush))
 
 ;;;###autoload
