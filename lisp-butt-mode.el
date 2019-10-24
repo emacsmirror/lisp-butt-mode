@@ -59,7 +59,13 @@
 ;; 
 ;; Unveil the full butt at the cursor temporarily with
 ;; 
-;;     {M-x lisp-butt-unfontify}
+;;     {M-x lisp-butt-unfontify RET}
+;; 
+;; Customize lisp-butt-auto-unfontify
+;; 
+;;     {M-x customize-variable RET lisp-butt-auto-unfontify RET }
+;; 
+;; for automatic unfontification or not when point hits a butt.
 ;; 
 ;; Some configuration is possible.  See
 ;; 
@@ -105,6 +111,12 @@
          lisp-butt-hole)
         nil))))
 
+(defcustom lisp-butt-auto-unfontify
+  t
+  "Automatically unfontify when cursor hits a butt."
+  :type '(boolean)
+  :group 'lisp-butt)
+
 
 ;; core
 
@@ -140,9 +152,8 @@
 
 ;;;###autoload
 (defun lisp-butt-unfontify-on-paren ()
-  "Unfontify Lisp butt at point when before a paren.
-This is thought to save cpu overall."
-  (when (= 41 (following-char))
+  "Unfontify Lisp butt at point when before a paren."
+  (when (and lisp-butt-mode (= ?\) (following-char))
     (lisp-butt-unfontify)))
 
 
@@ -154,8 +165,10 @@ This is thought to save cpu overall."
   :lighter lisp-butt-mode-lighter
   (cond
    (lisp-butt-mode (lisp-butt-set-slim-display)
-                   (add-hook 'post-command-hook 'lisp-butt-unfontify-on-paren 0 t))
-   (t (remove-hook 'post-command-hook 'lisp-butt-unfontify-on-paren t)
+                   (when lisp-butt-auto-unfontify
+                     (add-hook 'post-command-hook 'lisp-butt-unfontify-on-paren 0 t)))
+   (t (when lisp-butt-auto-unfontify
+        (remove-hook 'post-command-hook 'lisp-butt-unfontify-on-paren t))
       (lisp-butt-unset-slim-display)))
   (font-lock-flush))
 
