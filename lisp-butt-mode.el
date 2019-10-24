@@ -138,22 +138,21 @@
   "Unfontify Lisp butt at point."
   (interactive)
   (let ((point (point)))
-   (while (and (< (point-min) (point))
-               (string= ")" (buffer-substring-no-properties (1- (point)) (point))))
-     (backward-char))
-   (save-match-data
-     (re-search-forward ")*")
-     (font-lock-unfontify-region
-      (match-beginning 0) (match-end 0))
-     (let ((composi (find-composition (- (match-end 0) 2))))
-       (when composi
-	 (decompose-region (nth 0 composi) (nth 1 composi)))))
-   (goto-char point)))
+    (while (and (< (point-min) (point))
+		(string= ")" (buffer-substring-no-properties (1- (point)) (point))))
+      (backward-char))
+    (save-match-data
+      (re-search-forward ")*")
+      (font-lock-unfontify-region
+       (match-beginning 0) (match-end 0))
+      (let ((composi (find-composition (- (match-end 0) 2))))
+	(when composi
+	  (decompose-region (nth 0 composi) (nth 1 composi)))))
+    (goto-char point)))
 
-;;;###autoload
 (defun lisp-butt-unfontify-on-paren ()
   "Unfontify Lisp butt at point when before a paren."
-  (when (and lisp-butt-mode (= ?\) (following-char))
+  (when (and lisp-butt-mode (= ?\) (following-char)))
     (lisp-butt-unfontify)))
 
 
