@@ -210,6 +210,10 @@ marcowahlsoft@gmail.com.
 
 *** Open
 
+**** TODO Respect also ]
+
+This is a present for the racket people to the racketfest.
+
 *** Closed
 
 **** DONE Make lisp-butt-unfontify functional for emacs -Q
@@ -346,7 +350,7 @@ The modes considered by lisp-butt-global-mode.
 
 #+begin_src emacs-lisp
 (defcustom lisp-butt-modes
-  '(lisp-mode emacs-lisp-mode clojure-mode)
+  '(lisp-mode emacs-lisp-mode clojure-mode racket-mode)
   "Modes considered by `lisp-butt-global-mode'."
   :type '(repeat symbol)
   :group 'lisp-butt)
@@ -479,10 +483,10 @@ The modes considered by lisp-butt-global-mode.
 
 *** Run Unittests
 
+# <(trigger tests)>
+
  - Evaluate the following source block to tangle the necessary and run
    the unittests e.g. by following the link [[elisp:(progn (org-babel-next-src-block) (org-babel-execute-src-block))]]
-
-# <(trigger tests)>
 
 #+begin_src emacs-lisp :results silent
 (require 'ert)
@@ -598,6 +602,53 @@ not get included in the package.
     (goto-char 6)
     (lisp-butt-unfontify)
     (should-not (find-composition 6))))
+#+end_src
+
+***** test versus column
+:PROPERTIES:
+:ID:       5b6c5bd1-bf91-4cae-825b-af8318974db3
+:END:
+
+#+begin_src emacs-lisp
+(ert-deftest test-8954f46a82a828ff0537fe94e36891a9dc452e70 ()
+  "test buttification when turning on lisp-butt-mode."
+  (with-temp-buffer
+    (lisp-mode)
+    (font-lock-mode)
+    (insert "((((
+))))")
+    (lisp-butt-mode)
+    (font-lock-ensure)
+    (end-of-line)
+    (should (= 3 (current-column)))))
+#+end_src
+
+#+begin_src emacs-lisp
+(ert-deftest test-d9c804d9d64948029b22b835241d7078cd653548 ()
+  "test buttification when turning on lisp-butt-mode."
+  (with-temp-buffer
+    (lisp-mode)
+    (font-lock-mode)
+    (insert "(((((
+)))))")
+    (lisp-butt-mode)
+    (font-lock-ensure)
+    (end-of-line)
+    (should (= 3 (current-column)))))
+#+end_src
+
+#+begin_src emacs-lisp
+(ert-deftest test-9f858e50066aa285451ff6b53a21495b1f5277e0 ()
+  "test buttification when turning on lisp-butt-mode."
+  (with-temp-buffer
+    (lisp-mode)
+    (font-lock-mode)
+    (insert "(([(((
+)))]))")
+    (lisp-butt-mode)
+    (font-lock-ensure)
+    (end-of-line)
+    (should (= 3 (current-column)))))
 #+end_src
 
 **** Last Lines
