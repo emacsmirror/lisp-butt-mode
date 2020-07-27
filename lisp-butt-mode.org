@@ -100,53 +100,7 @@ Add the respective lines to your init.el:
 means =lisp-butt-mode= should be easily accessible per package
 manager.
 
-** Metadata
-
-*** Version
-
-#+name: lisp-butt-version
-#+begin_src text
-1.0.3
-#+end_src
-
-*** Typical Metadata
-
-Author, contact, dependencies.
-
-#+name: package-metadata
-#+begin_src text :noweb yes
-Author: Marco Wahl <marcowahlsoft@gmail.com>
-Maintainer: Marco Wahl <marcowahlsoft@gmail.com>
-Created: [2019-07-11]
-Version: <<lisp-butt-version>>
-Package-Requires: ((emacs "25"))
-Keywords: lisp
-URL: https://gitlab.com/marcowahl/lisp-butt-mode
-#+end_src
-
-*** Copyright
-
-#+name: copyright
-#+begin_src text :noweb yes
-Copyright 2019 Marco Wahl
-
-<<package-metadata>>
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
-#+end_src
-
-** About this Program
+** More about this program
 :PROPERTIES:
 :ID:       76033920-34fc-4854-96af-9df084ae300d
 :END:
@@ -205,6 +159,74 @@ releases due to the wish from the melpa side.
 
 Send feedback, wishes, bug reports, contributions etc. to
 marcowahlsoft@gmail.com.
+
+** Metadata
+
+*** Version
+
+#+name: lisp-butt-version
+#+begin_src text
+1.0.3
+#+end_src
+
+*** Typical Metadata
+
+Author, contact, dependencies.
+
+#+name: package-metadata
+#+begin_src text :noweb yes
+Author: Marco Wahl <marcowahlsoft@gmail.com>
+Maintainer: Marco Wahl <marcowahlsoft@gmail.com>
+Created: [2019-07-11]
+Version: <<lisp-butt-version>>
+Package-Requires: ((emacs "25"))
+Keywords: lisp
+URL: https://gitlab.com/marcowahl/lisp-butt-mode
+#+end_src
+
+*** Copyright
+
+#+name: copyright
+#+begin_src text :noweb yes
+Copyright 2019 Marco Wahl
+
+<<package-metadata>>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#+end_src
+
+** Testing
+
+*** Run Unittests
+
+# <(trigger tests)>
+
+ - Evaluate the following source block to tangle the necessary and run
+   the unittests e.g. by following the link [[elisp:(progn (org-babel-next-src-block) (org-babel-execute-src-block))]]
+
+#+begin_src emacs-lisp :results silent
+(require 'ert)
+(let ((apath "."))
+  (org-babel-tangle-file "lisp-butt-mode.org")
+  (ert-delete-all-tests)
+  (push apath load-path)
+  (load "lisp-butt-mode.el")
+  (load "lisp-butt-mode-test.el")
+  (ert t)
+  (setq load-path (remove apath load-path))
+  (run-with-timer 1 nil (lambda () (switch-to-buffer-other-window "*ert*"))))
+#+end_src
 
 ** Tasks
 
@@ -479,29 +501,7 @@ The modes considered by lisp-butt-global-mode.
 ;;; lisp-butt-mode.el ends here
 #+end_src
 
-** Testing
-
-*** Run Unittests
-
-# <(trigger tests)>
-
- - Evaluate the following source block to tangle the necessary and run
-   the unittests e.g. by following the link [[elisp:(progn (org-babel-next-src-block) (org-babel-execute-src-block))]]
-
-#+begin_src emacs-lisp :results silent
-(require 'ert)
-(let ((apath "."))
-  (org-babel-tangle-file "lisp-butt-mode.org")
-  (ert-delete-all-tests)
-  (push apath load-path)
-  (load "lisp-butt-mode.el")
-  (load "lisp-butt-mode-test.el")
-  (ert t)
-  (setq load-path (remove apath load-path))
-  (run-with-timer 1 nil (lambda () (switch-to-buffer-other-window "*ert*"))))
-#+end_src
-
-*** Unittests
+** Unittests
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle lisp-butt-mode-test.el
 :END:
@@ -509,7 +509,7 @@ The modes considered by lisp-butt-global-mode.
 Note: the name with suffix =-test= has a meaning for melpa: the file does
 not get included in the package.
 
-**** First lines
+*** First lines
 :PROPERTIES:
 :ID:       0afc357c-dbc7-447b-8123-8b725e9c6e7d
 :END:
@@ -525,7 +525,7 @@ not get included in the package.
 
 #+end_src
 
-**** Tests
+*** Tests
 :PROPERTIES:
 :header-args:emacs-lisp+: :comments both
 :ID:       dac141b6-e0a8-4312-8022-90b08fce4c84
@@ -535,7 +535,7 @@ not get included in the package.
 (require 'lisp-butt-mode)
 #+end_src
 
-***** existence of the program
+**** existence of the program
 :PROPERTIES:
 :ID:       64deaaad-d23f-485b-97a7-3ed650afcd03
 :END:
@@ -548,9 +548,9 @@ not get included in the package.
     (lisp-butt-mode)))
 #+end_src
 
-***** mode on/off
+**** mode on/off
 
-****** turn on the mode
+***** turn on the mode
 :PROPERTIES:
 :ID:       4c932e52-a9a7-49e4-9df1-9161289bef0e
 :END:
@@ -567,7 +567,7 @@ not get included in the package.
     (should (find-composition 6))))
 #+end_src
 
-****** turn off the mode
+***** turn off the mode
 :PROPERTIES:
 :ID:       086aa050-db0a-45ed-b03b-4e1d722e0125
 :END:
@@ -585,7 +585,7 @@ not get included in the package.
     (should-not (find-composition 6))))
 #+end_src
 
-***** decompose butt at point
+**** decompose butt at point
 :PROPERTIES:
 :ID:       d758d5b9-c75f-43d5-8dc7-8ee12800dcc0
 :END:
@@ -604,7 +604,7 @@ not get included in the package.
     (should-not (find-composition 6))))
 #+end_src
 
-***** test versus column
+**** test versus column
 :PROPERTIES:
 :ID:       5b6c5bd1-bf91-4cae-825b-af8318974db3
 :END:
@@ -651,7 +651,7 @@ not get included in the package.
     (should (= 3 (current-column)))))
 #+end_src
 
-**** Last Lines
+*** Last Lines
 :PROPERTIES:
 :ID:       b4d9edb9-2c12-4110-a47d-361ce458f129
 :END:
