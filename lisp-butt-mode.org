@@ -20,8 +20,8 @@ Example:
 ))))))))))))))))))))))))))))))))
 #+end_src
 
-Nobody wants to talk about this but at the same time nobody wants to see
-these ugly horrific monsters.
+Nobody wants to talk about this but(t,) at the same time nobody wants
+to see these ugly horrific monsters.
 
 ** What the lisp-butt-mode offers
 
