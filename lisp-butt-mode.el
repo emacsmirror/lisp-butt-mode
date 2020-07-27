@@ -97,12 +97,12 @@
   :group 'lisp-butt)
 
 (defcustom lisp-butt-modes
-  '(lisp-mode emacs-lisp-mode clojure-mode)
+  '(lisp-mode emacs-lisp-mode clojure-mode racket-mode)
   "Modes considered by `lisp-butt-global-mode'."
   :type '(repeat symbol)
   :group 'lisp-butt)
 
-(defvar lisp-butt-regexp ")\\())+\\))")
+(defvar lisp-butt-regexp (rx (seq (or ")" "]") (group (+ (or ")" "]"))) (or ")" "]"))))
 
 (defvar lisp-butt-pattern
   `((,lisp-butt-regexp
@@ -142,7 +142,7 @@
 		(string= ")" (buffer-substring-no-properties (1- (point)) (point))))
       (backward-char))
     (save-match-data
-      (re-search-forward ")*")
+      (re-search-forward (rx (* (or ")" "]"))))
       (font-lock-unfontify-region
        (match-beginning 0) (match-end 0))
       (let ((composi (find-composition (- (match-end 0) 2))))
@@ -152,7 +152,9 @@
 
 (defun lisp-butt-unfontify-on-paren ()
   "Unfontify Lisp butt at point when before a paren."
-  (when (and lisp-butt-mode (= ?\) (following-char)))
+ (when (and lisp-butt-mode
+            (or (= ?\) (following-char))
+                (= ?\] (following-char))))
     (lisp-butt-unfontify)))
 
 
