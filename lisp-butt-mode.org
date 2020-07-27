@@ -212,7 +212,7 @@ marcowahlsoft@gmail.com.
 
 **** TODO Respect also ]
 
-This is a present for the racket people to the racketfest.
+When ] also get respected lisp butt mode would be a better fit for racket.
 
 *** Closed
 
