@@ -3,12 +3,12 @@
 
 ;; THIS FILE HAS BEEN GENERATED.  see the literate source.
 
-;; Copyright 2019 Marco Wahl
+;; Copyright 2019, 2020 Marco Wahl
 ;; 
 ;; Author: Marco Wahl <marcowahlsoft@gmail.com>
 ;; Maintainer: Marco Wahl <marcowahlsoft@gmail.com>
 ;; Created: [2019-07-11]
-;; Version: 1.0.3
+;; Version: 2.0.2
 ;; Package-Requires: ((emacs "25"))
 ;; Keywords: lisp
 ;; URL: https://gitlab.com/marcowahl/lisp-butt-mode

@@ -168,7 +168,7 @@ marcowahlsoft@gmail.com.
 
 #+name: lisp-butt-version
 #+begin_src text
-1.0.3
+2.0.2
 #+end_src
 
 *** Typical Metadata
@@ -190,7 +190,7 @@ URL: https://gitlab.com/marcowahl/lisp-butt-mode
 
 #+name: copyright
 #+begin_src text :noweb yes
-Copyright 2019 Marco Wahl
+Copyright 2019, 2020 Marco Wahl
 
 <<package-metadata>>
 
