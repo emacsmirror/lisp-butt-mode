@@ -36,6 +36,8 @@ With lisp-butt-mode e.g.
 gets displayed nicely as (pun intended):
 
 	).)
+
+Also closing brackets are respected.
 #+end_src
 
 ** Concrete Use :easy:
@@ -205,6 +207,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #+end_src
+
+*** History
+
+**** 2.0.0 support for ] butt cheeks
 
 ** Testing
 
