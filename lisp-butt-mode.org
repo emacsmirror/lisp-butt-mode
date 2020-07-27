@@ -390,7 +390,7 @@ The modes considered by lisp-butt-global-mode.
 :END:
 
 #+begin_src emacs-lisp
-(defvar lisp-butt-regexp (rx (seq (or ")" "]") (group (+ (or ")" "]"))) (or ")" "]"))))
+(defvar lisp-butt-regexp (rx (seq (or ")" "]")  (group (or ")" "]") (+ (or ")" "]"))) (or ")" "]"))))
 
 (defvar lisp-butt-pattern
   `((,lisp-butt-regexp

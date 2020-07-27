@@ -104,7 +104,7 @@
   :type '(repeat symbol)
   :group 'lisp-butt)
 
-(defvar lisp-butt-regexp (rx (seq (or ")" "]") (group (+ (or ")" "]"))) (or ")" "]"))))
+(defvar lisp-butt-regexp (rx (seq (or ")" "]")  (group (or ")" "]") (+ (or ")" "]"))) (or ")" "]"))))
 
 (defvar lisp-butt-pattern
   `((,lisp-butt-regexp
