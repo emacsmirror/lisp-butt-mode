@@ -482,7 +482,9 @@ The modes considered by lisp-butt-global-mode.
 #+begin_src emacs-lisp :noweb yes
 <<page-break>>
 ;; mode definition
+#+end_src
 
+#+begin_src emacs-lisp
 ;;;###autoload
 (define-minor-mode lisp-butt-mode
   "Display slim lisp butts."
@@ -495,13 +497,16 @@ The modes considered by lisp-butt-global-mode.
         (remove-hook 'post-command-hook 'lisp-butt-unfontify-on-paren t))
       (lisp-butt-unset-slim-display)))
   (font-lock-flush))
+#+end_src
 
+#+begin_src emacs-lisp
 ;;;###autoload
 (define-global-minor-mode lisp-butt-global-mode
   lisp-butt-mode
   (lambda ()
     (when (apply #'derived-mode-p lisp-butt-modes)
-        (lisp-butt-mode))))
+        (lisp-butt-mode)))
+  :group 'lisp-butt)
 #+end_src
 
 *** Last Lines

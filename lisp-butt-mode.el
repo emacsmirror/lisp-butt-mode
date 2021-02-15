@@ -181,7 +181,8 @@
   lisp-butt-mode
   (lambda ()
     (when (apply #'derived-mode-p lisp-butt-modes)
-        (lisp-butt-mode))))
+        (lisp-butt-mode)))
+  :group 'lisp-butt)
 
 
 (provide 'lisp-butt-mode)
