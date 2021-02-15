@@ -168,7 +168,7 @@ marcowahlsoft@gmail.com.
 
 #+name: lisp-butt-version
 #+begin_src text
-2.0.3
+2.0.4
 #+end_src
 
 *** Typical Metadata
