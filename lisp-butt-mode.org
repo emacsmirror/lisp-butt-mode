@@ -210,13 +210,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 *** History
 
-**** 2.0.0 support for ] butt cheeks
-
 **** 2.0.3 fix lisp-butt-pattern
 
 Contribution by Win Treese.  Wrap the call to compose-region in a
 progn that returns nil.  This seems to be the way font-lock-keywords
 work.  This fix addresses the invalid face reference messages.
+
+**** 2.0.0 support for ] butt cheeks
 
 ** Testing
 
