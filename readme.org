@@ -168,7 +168,7 @@ marcowahlsoft@gmail.com.
 
 #+name: lisp-butt-version
 #+begin_src text
-2.0.2
+2.0.3
 #+end_src
 
 *** Typical Metadata
@@ -211,6 +211,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 *** History
 
 **** 2.0.0 support for ] butt cheeks
+
+**** 2.0.3 fix lisp-butt-pattern
+
+Contribution by Win Treese.  Wrap the call to compose-region in a
+progn that returns nil.  This seems to be the way font-lock-keywords
+work.  This fix addresses the invalid face reference messages.
 
 ** Testing
 
@@ -394,9 +400,10 @@ The modes considered by lisp-butt-global-mode.
 
 (defvar lisp-butt-pattern
   `((,lisp-butt-regexp
-     (1 (compose-region
-         (match-beginning 1) (match-end 1)
-         lisp-butt-hole)
+     (1 (progn (compose-region
+                (match-beginning 1) (match-end 1)
+                lisp-butt-hole)
+               nil)
         nil))))
 #+end_src
 

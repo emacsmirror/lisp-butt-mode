@@ -11,7 +11,7 @@
 ;; Author: Marco Wahl <marcowahlsoft@gmail.com>
 ;; Maintainer: Marco Wahl <marcowahlsoft@gmail.com>
 ;; Created: [2019-07-11]
-;; Version: 2.0.2
+;; Version: 2.0.3
 ;; Package-Requires: ((emacs "25"))
 ;; Keywords: lisp
 ;; URL: https://gitlab.com/marcowahl/lisp-butt-mode
@@ -108,9 +108,10 @@
 
 (defvar lisp-butt-pattern
   `((,lisp-butt-regexp
-     (1 (compose-region
-         (match-beginning 1) (match-end 1)
-         lisp-butt-hole)
+     (1 (progn (compose-region
+                (match-beginning 1) (match-end 1)
+                lisp-butt-hole)
+               nil)
         nil))))
 
 (defcustom lisp-butt-auto-unfontify
