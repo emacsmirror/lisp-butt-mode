@@ -5,6 +5,8 @@
 :EXPORT_FILE_NAME: doc-org-pretty-tags
 :END:
 
+[[file:./abutt.png]]
+
 This is a minor mode to make fat lisp butts appear slim.
 
 ** Why
